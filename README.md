@@ -1,65 +1,69 @@
-# @edutalk/vue-feedback-widget
+# @odestiny91/vue-feedback-widget
 
-> Modern, standalone feedback and bug reporting widget for **Vue 3** with high-resolution screenshot capture and direct **Telegram Bot** / **Webhook** integration.
-
----
-
-## ✨ Tính năng nổi bật
-
-- 🎯 **Nút Floating & Dialog đẹp mắt**: Thiết kế sang trọng, hỗ trợ chế độ Dark Mode & Light Mode.
-- 📸 **Tự động chụp ảnh màn hình**: Chụp sắc nét toàn bộ trang web hoặc vùng chỉ định (loại trừ modal/popup tự động).
-- 📋 **Dán ảnh từ Clipboard (Ctrl + V)** & **Kéo thả ảnh (Drag & Drop)** hoặc tải file từ máy tính/điện thoại.
-- ✈️ **Tích hợp Telegram Bot**: Gửi ngay thông báo kèm hình ảnh và metadata (URL, User, thiết bị, độ phân giải, thời gian) vào nhóm Telegram của đội phát triển.
-- 🔗 **Hỗ trợ Custom Webhook / API Backend**: Tùy biến endpoint nhận dữ liệu feedback dễ dàng.
-- 📦 **Độc lập, siêu nhẹ**: Không bắt buộc cài đặt UI library nào khác, tự động đính kèm CSS tối ưu.
+A modern, lightweight, and plug-and-play feedback & bug reporting widget for **Vue 3**.  
+Capture high-res screenshots, collect user context, and send reports straight to **Telegram** or your custom **Webhook** in seconds.
 
 ---
 
-## 📦 Cài đặt
+## Features
+
+- 🎨 **Sleek UI** — Built-in floating launcher and modal dialog with clean styling and dark mode support.
+- 📸 **Automatic Screenshots** — Capture full pages or active viewports cleanly with auto-exclusion of dialogs/overlays.
+- 📋 **Flexible Media Uploads** — Paste screenshots directly from clipboard (`Ctrl+V`), drag & drop files, or browse.
+- 💬 **Instant Telegram Alerts** — Deliver rich messages with screenshots and environment metadata (URL, user info, device, viewport, timestamp) directly to developer channels or forum topics.
+- 🔗 **Custom Webhook & Handlers** — Pipe feedback payloads to your own backend API, Slack, Discord, or ticketing systems.
+- ⚡ **Zero Bloat & Framework Independent** — Works seamlessly with any Vue 3 app (Vite, Nuxt 3, Quasar, etc.) without requiring bulky UI frameworks.
+
+---
+
+## Installation
 
 ```bash
-# Bằng npm
-npm install @edutalk/vue-feedback-widget
+# npm
+npm install @odestiny91/vue-feedback-widget
 
-# Bằng yarn
-yarn add @edutalk/vue-feedback-widget
+# yarn
+yarn add @odestiny91/vue-feedback-widget
 
-# Bằng pnpm
-pnpm add @edutalk/vue-feedback-widget
+# pnpm
+pnpm add @odestiny91/vue-feedback-widget
 ```
 
 ---
 
-## 🚀 Hướng dẫn sử dụng nhanh
+## Quick Start
 
-### 1. Khởi tạo Plugin trong `main.ts`
+### 1. Register the plugin
+
+In your `main.ts` or `main.js`:
 
 ```typescript
 import { createApp } from 'vue'
 import App from './App.vue'
-import VueFeedbackWidget from '@edutalk/vue-feedback-widget'
-import '@edutalk/vue-feedback-widget/style.css'
+
+// Import plugin and bundled styles
+import VueFeedbackWidget from '@odestiny91/vue-feedback-widget'
+import '@odestiny91/vue-feedback-widget/style.css'
 
 const app = createApp(App)
 
 app.use(VueFeedbackWidget, {
-  appName: 'Edutalk Portal',
-  appVersion: '2.0.0',
+  appName: 'My Awesome App',
+  appVersion: '1.0.0',
   telegram: {
     botToken: import.meta.env.VITE_TELEGRAM_BOT_TOKEN,
     chatId: import.meta.env.VITE_TELEGRAM_CHAT_ID,
-    // threadId: 12345 // (Tùy chọn) ID topic/thread nếu dùng Telegram Forum
+    // threadId: 12345 // Optional: Topic/Thread ID for Telegram supergroups
   },
-  // Hàm cung cấp thông tin người dùng đang đăng nhập
+  // Optional: Attach logged-in user context
   getUser: () => {
-    const user = authStore.user
+    const user = authStore.user // e.g. from Pinia / Vuex
     if (!user) return null
     return {
       id: user.id,
-      name: user.name,
+      name: user.fullName,
       email: user.email,
-      role: user.roleName,
-      branch: user.branchName
+      role: user.role
     }
   }
 })
@@ -67,78 +71,87 @@ app.use(VueFeedbackWidget, {
 app.mount('#app')
 ```
 
-### 2. Thêm Widget vào `App.vue`
+### 2. Add the floating button
 
-```html
+Place `<FeedbackFloatingButton />` in your root component (e.g., `App.vue`):
+
+```vue
 <template>
   <div id="app">
-    <!-- Nút nổi báo lỗi & góp ý -->
-    <FeedbackFloatingButton position="bottom-right" />
-    
     <router-view />
+
+    <!-- Feedback button in bottom corner -->
+    <FeedbackFloatingButton position="bottom-right" />
   </div>
 </template>
 ```
 
 ---
 
-## 🛠️ Sử dụng Composable `useFeedback`
+## Programmatic Control (`useFeedback`)
 
-Bạn có thể chủ động mở modal feedback từ bất kỳ menu, header hoặc nút bấm nào trong ứng dụng:
+Need to trigger feedback from a navigation bar, user settings menu, or an error boundary? Use the `useFeedback` composable:
 
 ```vue
 <script setup lang="ts">
-import { useFeedback } from '@edutalk/vue-feedback-widget'
+import { useFeedback } from '@odestiny91/vue-feedback-widget'
 
-const { open, captureCurrentScreen } = useFeedback()
+const { open, close, isOpen, isCapturing } = useFeedback()
 
-// Mở modal dạng Báo lỗi
-function handleReportBug() {
+// Open modal pre-selected for bug reporting
+function reportIssue() {
   open('bug')
 }
 
-// Mở modal dạng Đóng góp ý kiến
-function handleSuggest() {
+// Open modal for feature suggestions
+function sendFeedback() {
   open('suggestion')
 }
 </script>
 
 <template>
-  <button @click="handleReportBug">Báo sự cố trang này</button>
+  <button @click="reportIssue">Report a bug on this page</button>
+  <button @click="sendFeedback">Give feedback</button>
 </template>
 ```
 
 ---
 
-## ⚙️ Tùy chọn cấu hình (Options)
+## Configuration Options
 
-| Tên Option | Kiểu dữ liệu | Mặc định | Mô tả |
+Pass these options to `app.use(VueFeedbackWidget, options)`:
+
+| Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `appName` | `string` | `undefined` | Tên của ứng dụng hoặc cổng thông tin |
-| `appVersion` | `string` | `undefined` | Phiên bản app hiện tại |
-| `telegram` | `TelegramConfig` | `undefined` | Cấu hình gửi qua Telegram Bot (`botToken`, `chatId`, `threadId`) |
-| `webhook` | `WebhookConfig` | `undefined` | Cấu hình gửi qua Webhook URL riêng (`url`, `headers`) |
-| `getUser` | `() => UserContext` | `undefined` | Callback trả về thông tin user hiện tại |
-| `onSubmit` | `(payload) => Promise<boolean>` | `undefined` | Tùy biến toàn quyền logic submit dữ liệu |
+| `appName` | `string` | `undefined` | Display name of your web application |
+| `appVersion` | `string` | `undefined` | Current build version of your app |
+| `telegram` | `TelegramConfig` | `undefined` | Config for Telegram Bot integration (`botToken`, `chatId`, `threadId`) |
+| `webhook` | `WebhookConfig` | `undefined` | Custom HTTP endpoint config (`url`, `headers`) |
+| `getUser` | `() => UserContext \| null` | `undefined` | Getter function returning metadata of current user |
+| `onSubmit` | `(payload: FeedbackPayload) => Promise<boolean>` | `undefined` | Override default sending logic with custom handler |
 
 ---
 
-## 🚀 Hướng dẫn Build & Publish lên NPM
+## Custom Submit Handler
 
-### 1. Build package
-```bash
-cd packages/vue-feedback-widget
-npm install
-npm run build
-```
+If you want to send reports directly to your private backend instead of Telegram:
 
-### 2. Đăng nhập và Public lên NPM
-```bash
-npm login
-npm publish --access public
+```typescript
+app.use(VueFeedbackWidget, {
+  appName: 'Admin Portal',
+  onSubmit: async (payload) => {
+    const response = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    return response.ok
+  }
+})
 ```
 
 ---
 
-## 📄 Giấy phép
-MIT License © Edutalk
+## License
+
+[MIT](LICENSE) © [ODESTINY](https://github.com/oDesEdutalk)
