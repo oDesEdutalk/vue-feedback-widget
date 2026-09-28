@@ -1,0 +1,55 @@
+{
+  "name": "@odestiny91/vue-feedback-widget",
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Modern, standalone feedback and bug reporting widget for Vue 3 with screenshot capture and Telegram/Webhook integration.",
+  "type": "module",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "vue",
+    "vue3",
+    "feedback",
+    "bug-report",
+    "error-report",
+    "screenshot",
+    "widget",
+    "telegram-bot"
+  ],
+  "author": "ODESTINY",
+  "license": "MIT",
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "html-to-image": "^1.11.11",
+    "lucide-vue-next": "^0.470.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.8.0",
+    "vue": "^3.4.21",
+    "vue-tsc": "^2.0.0"
+  }
+}

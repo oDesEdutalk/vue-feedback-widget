@@ -1,0 +1,82 @@
+/* Vue Feedback Widget Default Styles */
+.vfw-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.vfw-modal {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.dark .vfw-modal,
+.dark-mode .vfw-modal {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.vfw-floating-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #f43f5e;
+  color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(244, 63, 94, 0.4), 0 4px 6px -4px rgba(244, 63, 94, 0.3);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.vfw-floating-btn:hover {
+  background-color: #e11d48;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(244, 63, 94, 0.5);
+}
+
+.vfw-floating-btn:active {
+  transform: scale(0.95);
+}
+
+.vfw-fade-enter-active,
+.vfw-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.vfw-fade-enter-from,
+.vfw-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.vfw-slide-enter-active,
+.vfw-slide-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.vfw-slide-enter-from,
+.vfw-slide-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
