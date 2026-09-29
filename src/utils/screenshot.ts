@@ -42,8 +42,9 @@ export async function captureScreen(options: ScreenshotOptions = {}): Promise<st
   }
 
   const {
-    quality = 1,
-    scale = Math.max(window.devicePixelRatio || 1, 2),
+    format = 'image/jpeg',
+    quality = 0.85,
+    scale = 1,
     targetElement: customTarget,
   } = options
 
@@ -63,14 +64,22 @@ export async function captureScreen(options: ScreenshotOptions = {}): Promise<st
     document.documentElement.classList.contains('dark-mode')
 
   try {
-    const dataUrl = await htmlToImage.toPng(target, {
+    const captureConfig = {
       pixelRatio: scale,
       quality: quality,
       backgroundColor: isDarkMode ? '#111827' : '#ffffff',
-      filter: (node) => shouldIncludeElement(node as HTMLElement),
+      filter: (node: Node) => shouldIncludeElement(node as HTMLElement),
       cacheBust: false,
       skipAutoScale: false,
-    })
+      fontEmbedCSS: '', // Bypass heavy font loading/fetching which freezes main thread
+    }
+
+    let dataUrl: string | null = null
+    if (format === 'image/jpeg') {
+      dataUrl = await htmlToImage.toJpeg(target, captureConfig)
+    } else {
+      dataUrl = await htmlToImage.toPng(target, captureConfig)
+    }
 
     if (dataUrl && dataUrl.length > 100) {
       return dataUrl

@@ -96,7 +96,11 @@ export function useFeedback(localOptions?: FeedbackWidgetOptions) {
     })
 
     try {
-      const dataUrl = await captureScreen({ scale: 2 })
+      const dataUrl = await captureScreen({
+        scale: 1,
+        format: 'image/jpeg',
+        quality: 0.85,
+      })
       screenshotUrl.value = dataUrl
     } catch (err) {
       console.warn('[VueFeedbackWidget] Lỗi chụp màn hình:', err)
