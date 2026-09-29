@@ -65,13 +65,14 @@ export async function captureScreen(options: ScreenshotOptions = {}): Promise<st
     const htmlToImage = await import('html-to-image')
 
     const captureConfig = {
-      pixelRatio: scale,
+      pixelRatio: Math.min(scale || 1, 1.5),
       quality: quality,
       backgroundColor: isDarkMode ? '#111827' : '#ffffff',
       filter: (node: Node) => shouldIncludeElement(node as HTMLElement),
       cacheBust: false,
-      skipAutoScale: false,
-      fontEmbedCSS: '', // Bypass heavy font loading/fetching which freezes main thread
+      skipAutoScale: true,
+      skipFonts: true, // Skip font fetching & CSS parsing to keep main thread fast
+      fontEmbedCSS: '', // Bypass font embedding
     }
 
     let dataUrl: string | null = null

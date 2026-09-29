@@ -42,6 +42,11 @@ export function useFeedback(localOptions?: FeedbackWidgetOptions) {
     if (isSubmitting.value) return
     isOpen.value = false
     isImagePreviewOpen.value = false
+    screenshotUrl.value = null
+    title.value = ''
+    content.value = ''
+    errorMessage.value = ''
+    submitStatus.value = 'idle'
   }
 
   function setScreenshot(dataUrl: string | null) {

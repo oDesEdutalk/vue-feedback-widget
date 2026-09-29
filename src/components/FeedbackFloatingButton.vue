@@ -6,7 +6,7 @@ import { useFeedback } from '../composables/useFeedback'
 const FeedbackModal = defineAsyncComponent(() => import('./FeedbackModal.vue'))
 
 interface Props {
-  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
+  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'static' | 'none'
   label?: string
   badgeText?: string
   backgroundColor?: string
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
   position: 'bottom-right',
   label: 'Góp ý & Báo lỗi',
   badgeText: 'Góp ý & Báo lỗi',
-  backgroundColor: '#f43f5e',
+  backgroundColor: '#4f46e5',
   zIndex: 1100,
 })
 
@@ -35,6 +35,8 @@ const positionClasses = {
   'bottom-left': 'fixed bottom-2 left-6',
   'top-right': 'fixed top-6 right-6',
   'top-left': 'fixed top-6 left-6',
+  'static': 'relative',
+  'none': 'relative',
 }
 </script>
 
