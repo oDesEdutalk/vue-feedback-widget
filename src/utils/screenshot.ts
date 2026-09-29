@@ -1,5 +1,3 @@
-import * as htmlToImage from 'html-to-image'
-
 export interface ScreenshotOptions {
   format?: 'image/png' | 'image/jpeg'
   quality?: number
@@ -64,6 +62,8 @@ export async function captureScreen(options: ScreenshotOptions = {}): Promise<st
     document.documentElement.classList.contains('dark-mode')
 
   try {
+    const htmlToImage = await import('html-to-image')
+
     const captureConfig = {
       pixelRatio: scale,
       quality: quality,

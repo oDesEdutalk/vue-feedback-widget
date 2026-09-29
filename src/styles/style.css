@@ -2,8 +2,9 @@
 .vfw-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.6);
+  background-color: rgba(15, 23, 42, 0.55);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 99998;
   display: flex;
   align-items: center;
@@ -11,6 +12,7 @@
   padding: 1rem;
   overflow-y: auto;
   box-sizing: border-box;
+  will-change: opacity;
 }
 
 .vfw-modal {
@@ -19,13 +21,15 @@
   border-radius: 1rem;
   width: 100%;
   max-width: 640px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   font-family: inherit;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 .dark .vfw-modal,
@@ -33,6 +37,7 @@
   background: #0f172a;
   color: #f8fafc;
   border-color: #334155;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .vfw-floating-btn {
@@ -43,15 +48,16 @@
   background-color: #f43f5e;
   color: #ffffff;
   box-shadow: 0 10px 15px -3px rgba(244, 63, 94, 0.4), 0 4px 6px -4px rgba(244, 63, 94, 0.3);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: none;
   outline: none;
+  transform: translateZ(0);
 }
 
 .vfw-floating-btn:hover {
   background-color: #e11d48;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.04);
   box-shadow: 0 20px 25px -5px rgba(244, 63, 94, 0.5);
 }
 
@@ -59,24 +65,43 @@
   transform: scale(0.95);
 }
 
+/* GPU-accelerated Modal Open/Close Animations */
 .vfw-fade-enter-active,
 .vfw-fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.vfw-fade-enter-from,
+.vfw-fade-enter-active .vfw-modal,
+.vfw-fade-leave-active .vfw-modal {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vfw-fade-enter-from {
+  opacity: 0;
+}
+
+.vfw-fade-enter-from .vfw-modal {
+  opacity: 0;
+  transform: scale(0.95) translateY(8px);
+}
+
 .vfw-fade-leave-to {
   opacity: 0;
-  transform: scale(0.96);
 }
 
+.vfw-fade-leave-to .vfw-modal {
+  opacity: 0;
+  transform: scale(0.97) translateY(4px);
+}
+
+/* Tooltip Slide Transition */
 .vfw-slide-enter-active,
 .vfw-slide-leave-active {
-  transition: all 0.2s ease-out;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vfw-slide-enter-from,
 .vfw-slide-leave-to {
   opacity: 0;
-  transform: translateX(10px);
+  transform: translateX(8px);
 }

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
 import { MessageSquarePlus } from 'lucide-vue-next'
 import { useFeedback } from '../composables/useFeedback'
-import FeedbackModal from './FeedbackModal.vue'
+
+const FeedbackModal = defineAsyncComponent(() => import('./FeedbackModal.vue'))
 
 interface Props {
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
@@ -20,10 +21,12 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 1100,
 })
 
-const { open } = useFeedback()
+const { isOpen, open } = useFeedback()
 const isHovered = ref(false)
+const hasInteracted = ref(false)
 
 function handleOpen() {
+  hasInteracted.value = true
   open('bug')
 }
 
@@ -71,7 +74,7 @@ const positionClasses = {
       </button>
     </div>
 
-    <!-- Feedback Modal Component -->
-    <FeedbackModal />
+    <!-- Lazy-loaded Feedback Modal Component -->
+    <FeedbackModal v-if="hasInteracted || isOpen" />
   </div>
 </template>

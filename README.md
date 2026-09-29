@@ -1,4 +1,4 @@
-# @odestiny91/vue-feedback-widget
+# @edutalk/vue-feedback-widget
 
 A modern, lightweight, and plug-and-play feedback & bug reporting widget for **Vue 3**.  
 Capture high-res screenshots, collect user context, and send reports straight to **Telegram** or your custom **Webhook** in seconds.
@@ -20,13 +20,13 @@ Capture high-res screenshots, collect user context, and send reports straight to
 
 ```bash
 # npm
-npm install @odestiny91/vue-feedback-widget
+npm install @edutalk/vue-feedback-widget
 
 # yarn
-yarn add @odestiny91/vue-feedback-widget
+yarn add @edutalk/vue-feedback-widget
 
 # pnpm
-pnpm add @odestiny91/vue-feedback-widget
+pnpm add @edutalk/vue-feedback-widget
 ```
 
 ---
@@ -42,14 +42,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 // Import plugin and bundled styles
-import VueFeedbackWidget from '@odestiny91/vue-feedback-widget'
-import '@odestiny91/vue-feedback-widget/style.css'
+import VueFeedbackWidget from '@edutalk/vue-feedback-widget'
+import '@edutalk/vue-feedback-widget/style.css'
 
 const app = createApp(App)
 
 app.use(VueFeedbackWidget, {
   appName: 'My Awesome App',
-  appVersion: '1.0.0',
+  appVersion: '1.0.1',
   telegram: {
     botToken: import.meta.env.VITE_TELEGRAM_BOT_TOKEN,
     chatId: import.meta.env.VITE_TELEGRAM_CHAT_ID,
@@ -94,7 +94,7 @@ Need to trigger feedback from a navigation bar, user settings menu, or an error 
 
 ```vue
 <script setup lang="ts">
-import { useFeedback } from '@odestiny91/vue-feedback-widget'
+import { useFeedback } from '@edutalk/vue-feedback-widget'
 
 const { open, close, isOpen, isCapturing } = useFeedback()
 

@@ -1,6 +1,6 @@
 {
-  "name": "@odestiny91/vue-feedback-widget",
-  "version": "1.0.0",
+  "name": "@edutalk/vue-feedback-widget",
+  "version": "1.0.1",
   "publishConfig": {
     "access": "public"
   },

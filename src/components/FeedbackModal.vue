@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted, watch } from 'vue'
 import {
   MessageSquarePlus,
   Bug,
@@ -181,12 +181,23 @@ function showAlert(type: 'success' | 'error' | 'info', text: string) {
   }, 3500)
 }
 
-onMounted(() => {
-  window.addEventListener('paste', handlePasteEvent)
-})
+watch(
+  isOpen,
+  (val) => {
+    if (typeof window === 'undefined') return
+    if (val) {
+      window.addEventListener('paste', handlePasteEvent)
+    } else {
+      window.removeEventListener('paste', handlePasteEvent)
+    }
+  },
+  { immediate: true }
+)
 
 onUnmounted(() => {
-  window.removeEventListener('paste', handlePasteEvent)
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('paste', handlePasteEvent)
+  }
 })
 
 async function onSubmit() {
