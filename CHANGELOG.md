@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.0.3] - 2026-10-01
+
+### 🔄 Changed
+- **Feedback Content Limit**: Adjusted the maximum character limit for detailed feedback descriptions from 1000 down to 150 characters (`maxlength="150"`) and updated the character counter display accordingly.
+
+---
+
 ## [1.0.2] - 2026-09-29
 
 ### ⚡ Performance & Optimization

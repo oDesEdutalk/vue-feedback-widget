@@ -368,7 +368,7 @@ async function onSubmit() {
                     <span class="text-rose-500 font-bold">*</span>
                   </label>
                   <span class="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
-                    {{ content.length }}/1000 ký tự
+                    {{ content.length }}/150 ký tự
                   </span>
                 </div>
 
@@ -377,7 +377,7 @@ async function onSubmit() {
                   :placeholder="currentCategory.placeholder"
                   rows="4"
                   class="w-full rounded-xl text-sm p-2.5 sm:p-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/30 resize-y box-border leading-relaxed transition-colors"
-                  maxlength="1000"
+                  maxlength="150"
                   :disabled="isSubmitting"
                 />
 
